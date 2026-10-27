@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BIAM Laboratory School & College - 20 Year Anniversary Frame</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600;700&family=Poppins:wght@500;700&display=swap" rel="stylesheet">
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Hind Siliguri', 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #0a192f 0%, #1e3a8a 50%, #0284c7 100%);
+            color: #ffffff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px 10px;
+        }
+        .container {
+            width: 100%;
+            max-width: 1000px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 25px;
+        }
+        header { text-align: center; margin-bottom: 10px; }
+        header h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #fbbf24;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.4);
+            margin-bottom: 5px;
+        }
+        header p { font-size: 1.1rem; color: #e2e8f0; opacity: 0.95; }
+        .app-layout {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            gap: 20px;
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            border-radius: 20px;
+            padding: 20px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+        }
+        @media (min-width: 850px) {
+            .app-layout { flex-direction: row; align-items: flex-start; }
+        }
+        .preview-area {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+        }
+        .canvas-wrapper {
+            position: relative;
+            max-width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.5);
+        }
+        canvas {
+            display: block;
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            cursor: grab;
+        }
+        canvas:active { cursor: grabbing; }
+        .controls-area {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            width: 100%;
+        }
+        .control-group {
+            background: rgba(0, 0, 0, 0.25);
+            padding: 15px;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .control-group h3 {
+            font-size: 1rem;
+            color: #fbbf24;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        label { display: block; font-size: 0.9rem; margin-bottom: 6px; color: #cbd5e1; }
+        input[type="text"], input[type="file"] {
+            width: 100%;
+            padding: 10px 12px;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            font-family: inherit;
+            font-size: 0.95rem;
+            outline: none;
+        }
+        input[type="file"] { cursor: pointer; }
+        .slider-row { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+        .slider-row label { width: 80px; margin-bottom: 0; font-size: 0.85rem; }
+        .slider-row input[type="range"] { flex: 1; accent-color: #38bdf8; cursor: pointer; }
+        .btn-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px; }
+        button {
+            padding: 12px 16px;
+            border-radius: 10px;
+            border: none;
+            font-family: inherit;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
+            color: #ffffff;
+            box-shadow: 0 4px 15px rgba(249, 115, 22, 0.4);
+            grid-column: span 2;
+        }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(249, 115, 22, 0.6); }
+        .btn-secondary { background: rgba(255, 255, 255, 0.15); color: #ffffff; border: 1px solid rgba(255, 255, 255, 0.2); }
+        .btn-secondary:hover { background: rgba(255, 255, 255, 0.25); }
+        .aspect-options, .theme-options { display: flex; gap: 10px; margin-bottom: 10px; }
+        .radio-btn {
+            flex: 1;
+            padding: 8px;
+            text-align: center;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            transition: all 0.2s;
+        }
+        .radio-btn.active { background: #0284c7; border-color: #38bdf8; font-weight: bold; }
+        .hint-text { font-size: 0.8rem; color: #94a3b8; text-align: center; margin-top: 8px; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>বিয়াম ল্যাবরেটরি স্কুল অ্যান্ড কলেজ, নওগাঁ</h1>
+        <p>২০ বছর পূর্তি উৎসব - ফেসবুক পোস্ট ও ফ্রেম মেকার</p>
+    </header>
+
+    <div class="app-layout">
+        <div class="preview-area">
+            <div class="canvas-wrapper">
+                <canvas id="posterCanvas" width="1080" height="1080"></canvas>
+            </div>
+            <div class="hint-text">ছবি পজিশন ঠিক করতে ক্যানভাসের ওপর ড্রাগ (Drag) করুন</div>
+        </div>
+
+        <div class="controls-area">
+            <div class="control-group">
+                <h3>১. আপনার ছবি আপলোড করুন</h3>
+                <input type="file" id="imageInput" accept="image/*">
+            </div>
+
+            <div class="control-group">
+                <h3>২. সাইজ ও থিম নির্বাচন</h3>
+                <label>পোস্টার সাইজ:</label>
+                <div class="aspect-options">
+                    <div class="radio-btn active" onclick="setAspectRatio('1:1', this)">Facebook Post (1:1)</div>
+                    <div class="radio-btn" onclick="setAspectRatio('9:16', this)">Story / Reel (9:16)</div>
+                </div>
+            </div>
+
+            <div class="control-group">
+                <h3>৩. ছবি এডজাস্ট করুন</h3>
+                <div class="slider-row">
+                    <label>জুম (Zoom):</label>
+                    <input type="range" id="zoomSlider" min="0.2" max="3" step="0.01" value="1">
+                </div>
+                <div class="slider-row">
+                    <label>ব্রাইটনেস:</label>
+                    <input type="range" id="brightnessSlider" min="50" max="150" step="1" value="100">
+                </div>
+                <div class="btn-grid" style="grid-template-columns: 1fr 1fr; margin-top:5px;">
+                    <button class="btn-secondary" onclick="rotateImage(-90)">↺ ঘোরাতে</button>
+                    <button class="btn-secondary" onclick="flipImage()">↔ ফ্লিপ</button>
+                </div>
+            </div>
+
+            <div class="control-group">
+                <h3>৪. নাম ও পদবী (ঐচ্ছিক)</h3>
+                <input type="text" id="userName" placeholder="আপনার নাম (যেমন: আদিত্য চৌধুরী)" style="margin-bottom:8px;">
+                <input type="text" id="userRole" placeholder="পদবী / ব্যাচ (যেমন: প্রাক্তন শিক্ষার্থী / নবম শ্রেণি)">
+            </div>
+
+            <button class="btn-primary" onclick="downloadPoster()">
+                💾 পোস্টার ডাউনলোড করুন (HD)
+            </button>
+            <button class="btn-secondary" onclick="copyCaption()" style="width: 100%;">
+                📋 ফেসবুক ক্যাপশন কপি করুন
+            </button>
+        </div>
+    </div>
+</div>
+
+<script>
+    const canvas = document.getElementById('posterCanvas');
+    const ctx = canvas.getContext('2d');
+    
+    let userImg = null;
+    let aspectRatio = '1:1';
+    let imgX = 0, imgY = 0, imgScale = 1, imgRotation = 0, isFlipped = false;
+    let brightness = 100;
+
+    let isDragging = false;
+    let startX, startY;
+
+    function init() {
+        renderCanvas();
+    }
+
+    function setAspectRatio(ratio, element) {
+        aspectRatio = ratio;
+        document.querySelectorAll('.aspect-options .radio-btn').forEach(btn => btn.classList.remove('active'));
+        element.classList.add('active');
+        
+        if (ratio === '1:1') {
+            canvas.width = 1080;
+            canvas.height = 1080;
+        } else {
+            canvas.width = 1080;
+            canvas.height = 1920;
+        }
+        resetImageTransform();
+        renderCanvas();
+    }
+
+    document.getElementById('imageInput').addEventListener('change', function(e) {
+        const file = e.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                userImg = new Image();
+                userImg.onload = function() {
+                    resetImageTransform();
+                    renderCanvas();
+                };
+                userImg.src = event.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+    });
+
+    document.getElementById('zoomSlider').addEventListener('input', function(e) {
+        imgScale = parseFloat(e.target.value);
+        renderCanvas();
+    });
+
+    document.getElementById('brightnessSlider').addEventListener('input', function(e) {
+        brightness = parseInt(e.target.value);
+        renderCanvas();
+    });
+
+    document.getElementById('userName').addEventListener('input', renderCanvas);
+    document.getElementById('userRole').addEventListener('input', renderCanvas);
+
+    function rotateImage(deg) {
+        imgRotation = (imgRotation + deg) % 360;
+        renderCanvas();
+    }
+
+    function flipImage() {
+        isFlipped = !isFlipped;
+        renderCanvas();
+    }
+
+    function resetImageTransform() {
+        if (!userImg) return;
+        imgRotation = 0;
+        isFlipped = false;
+        brightness = 100;
+        document.getElementById('brightnessSlider').value = 100;
+        
+        const scaleX = canvas.width / userImg.width;
+        const scaleY = canvas.height / userImg.height;
+        imgScale = Math.max(scaleX, scaleY);
+        document.getElementById('zoomSlider').value = imgScale;
+        
+        imgX = canvas.width / 2;
+        imgY = canvas.height / 2;
+    }
+
+    // Dragging Logic
+    canvas.addEventListener('mousedown', startDrag);
+    canvas.addEventListener('touchstart', startDrag, {passive: false});
+
+    window.addEventListener('mousemove', drag);
+    window.addEventListener('touchmove', drag, {passive: false});
+
+    window.addEventListener('mouseup', endDrag);
+    window.addEventListener('touchend', endDrag);
+
+    function startDrag(e) {
+        if (!userImg) return;
+        isDragging = true;
+        const pos = getPos(e);
+        startX = pos.x - imgX;
+        startY = pos.y - imgY;
+    }
+
+    function drag(e) {
+        if (!isDragging || !userImg) return;
+        e.preventDefault();
+        const pos = getPos(e);
+        imgX = pos.x - startX;
+        imgY = pos.y - startY;
+        renderCanvas();
+    }
+
+    function endDrag() { isDragging = false; }
+
+    function getPos(e) {
+        const rect = canvas.getBoundingClientRect();
+        const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+        const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+        const scaleX = canvas.width / rect.width;
+        const scaleY = canvas.height / rect.height;
+        return {
+            x: (clientX - rect.left) * scaleX,
+            y: (clientY - rect.top) * scaleY
+        };
+    }
+
+    function renderCanvas() {
+        const W = canvas.width;
+        const H = canvas.height;
+
+        ctx.clearRect(0, 0, W, H);
+
+        // 1. Draw User Image
+        if (userImg) {
+            ctx.save();
+            ctx.filter = `brightness(${brightness}%)`;
+            ctx.translate(imgX, imgY);
+            ctx.rotate((imgRotation * Math.PI) / 180);
+            ctx.scale(isFlipped ? -1 : 1, 1);
+            ctx.drawImage(
+                userImg,
+                (-userImg.width * imgScale) / 2,
+                (-userImg.height * imgScale) / 2,
+                userImg.width * imgScale,
+                userImg.height * imgScale
+            );
+            ctx.restore();
+        } else {
+            // Placeholder background
+            ctx.fillStyle = '#0f172a';
+            ctx.fillRect(0, 0, W, H);
+            ctx.fillStyle = '#64748b';
+            ctx.font = 'bold 36px "Hind Siliguri", sans-serif';
+            ctx.textAlign = 'center';
+            ctx.fillText('এখানে আপনার ছবি আপলোড করুন', W / 2, H / 2);
+        }
+
+        // 2. Draw Poster Overlay / Frame Design
+        // Bottom Gradient Overlay for text readability
+        const gradHeight = H * 0.42;
+        const grad = ctx.createLinearGradient(0, H - gradHeight, 0, H);
+        grad.addColorStop(0, 'rgba(10, 25, 47, 0)');
+        grad.addColorStop(0.3, 'rgba(10, 25, 47, 0.75)');
+        grad.addColorStop(0.7, 'rgba(10, 25, 47, 0.95)');
+        grad.addColorStop(1, '#0a192f');
+        ctx.fillStyle = grad;
+        ctx.fillRect(0, H - gradHeight, W, gradHeight);
+
+        // Top Gradient for header elements
+        const topGrad = ctx.createLinearGradient(0, 0, 0, 200);
+        topGrad.addColorStop(0, 'rgba(10, 25, 47, 0.85)');
+        topGrad.addColorStop(1, 'rgba(10, 25, 47, 0)');
+        ctx.fillStyle = topGrad;
+        ctx.fillRect(0, 0, W, 200);
+
+        // Outer Decorative Border
+        ctx.strokeStyle = '#fbbf24';
+        ctx.lineWidth = 16;
+        ctx.strokeRect(10, 10, W - 20, H - 20);
+
+        ctx.strokeStyle = '#0284c7';
+        ctx.lineWidth = 6;
+        ctx.strokeRect(22, 22, W - 44, H - 44);
+
+        // 3. Draw Stylized "20" Logo Watermark (Top Right)
+        draw20Logo(ctx, W - 140, 120, 0.7);
+
+        // 4. Prominent Badge: "আমি আসছি!"
+        ctx.save();
+        const badgeX = 60;
+        const badgeY = 60;
+        ctx.fillStyle = '#f97316';
+        ctx.shadowColor = 'rgba(0,0,0,0.5)';
+        ctx.shadowBlur = 15;
+        roundRect(ctx, badgeX, badgeY, 260, 75, 15, true, false);
+        
+        ctx.fillStyle = '#ffffff';
+        ctx.font = 'bold 42px "Hind Siliguri", sans-serif';
+        ctx.textAlign = 'center';
+        ctx.shadowBlur = 0;
+        ctx.fillText('আমি আসছি!', badgeX + 130, badgeY + 52);
+        ctx.restore();
+
+        // 5. Main Invitation Text (Bottom)
+        ctx.textAlign = 'center';
+        
+        // Question Tagline
+        ctx.fillStyle = '#fbbf24';
+        ctx.font = 'bold 44px "Hind Siliguri", sans-serif';
+        ctx.shadowColor = 'rgba(0,0,0,0.8)';
+        ctx.shadowBlur = 10;
+        ctx.fillText('আপনারা সবাই ১৪ই নভেম্বর জেলা স্টেডিয়াম মাঠে আসছেন তো?', W / 2, H - 170);
+
+        // School Name
+        ctx.fillStyle = '#ffffff';
+        ctx.font = 'bold 36px "Hind Siliguri", sans-serif';
+        ctx.fillText('বিয়াম ল্যাবরেটরি স্কুল অ্যান্ড কলেজ, নওগাঁ', W / 2, H - 110);
+
+        // Subtitle / Event Title
+        ctx.fillStyle = '#38bdf8';
+        ctx.font = '600 28px "Hind Siliguri", sans-serif';
+        ctx.fillText('২০ বছর পূর্তি ও সুবর্ণ জয়ন্তী উৎসব', W / 2, H - 65);
+
+        // Optional User Name & Role
+        const uName = document.getElementById('userName').value.trim();
+        const uRole = document.getElementById('userRole').value.trim();
+        if (uName || uRole) {
+            ctx.save();
+            ctx.fillStyle = 'rgba(2, 132, 199, 0.9)';
+            roundRect(ctx, W / 2 - 250, H - 280, 500, uRole ? 70 : 50, 10, true, false);
+            
+            ctx.fillStyle = '#ffffff';
+            ctx.font = 'bold 28px "Hind Siliguri", sans-serif';
+            ctx.fillText(uName, W / 2, H - (uRole ? 245 : 245));
+            
+            if (uRole) {
+                ctx.fillStyle = '#fbbf24';
+                ctx.font = '20px "Hind Siliguri", sans-serif';
+                ctx.fillText(uRole, W / 2, H - 222);
+            }
+            ctx.restore();
+        }
+    }
+
+    // Helper for Stylized "20" Doodle Logo
+    function draw20Logo(ctx, x, y, scale) {
+        ctx.save();
+        ctx.translate(x, y);
+        ctx.scale(scale, scale);
+
+        // Circle Base
+        ctx.beginPath();
+        ctx.arc(30, 40, 70, 0, Math.PI * 2);
+        ctx.fillStyle = '#fbbf24';
+        ctx.fill();
+
+        // Stylized Sun Rays top
+        ctx.fillStyle = '#ea580c';
+        for(let i = -3; i <= 3; i++) {
+            ctx.beginPath();
+            ctx.moveTo(i * 22 - 10, -50);
+            ctx.lineTo(i * 22, -80);
+            ctx.lineTo(i * 22 + 10, -50);
+            ctx.closePath();
+            ctx.fill();
+        }
+
+        // Ribbon "2"
+        ctx.beginPath();
+        ctx.lineWidth = 32;
+        ctx.strokeStyle = '#0284c7';
+        ctx.lineCap = 'round';
+        ctx.moveTo(-60, -20);
+        ctx.bezierCurveTo(-20, -80, 50, -40, -40, 40);
+        ctx.lineTo(40, 40);
+        ctx.stroke();
+
+        // Ribbon "0"
+        ctx.beginPath();
+        ctx.lineWidth = 32;
+        ctx.strokeStyle = '#f97316';
+        ctx.arc(30, -10, 45, 0, Math.PI * 2);
+        ctx.stroke();
+
+        ctx.restore();
+    }
+
+    function roundRect(ctx, x, y, width, height, radius, fill, stroke) {
+        ctx.beginPath();
+        ctx.moveTo(x + radius, y);
+        ctx.lineTo(x + width - radius, y);
+        ctx.quadraticCurveTo(x + width, y, x + width, y + radius);
+        ctx.lineTo(x + width, y + height - radius);
+        ctx.quadraticCurveTo(x + width, y + height, x + width - radius, y + height);
+        ctx.lineTo(x + radius, y + height);
+        ctx.quadraticCurveTo(x, y + height, x, y + height - radius);
+        ctx.lineTo(x, y + radius);
+        ctx.quadraticCurveTo(x, y, x + radius, y);
+        ctx.closePath();
+        if (fill) ctx.fill();
+        if (stroke) ctx.stroke();
+    }
+
+    function downloadPoster() {
+        const link = document.createElement('a');
+        link.download = 'BLSC-20-Year-Anniversary.png';
+        link.href = canvas.toDataURL('image/png', 1.0);
+        link.click();
+    }
+
+    function copyCaption() {
+        const caption = `আমি আসছি! 🎉\nআপনারা সবাই ১৪ই নভেম্বর জেলা স্টেডিয়াম মাঠে আসছেন তো?\n\nবিয়াম ল্যাবরেটরি স্কুল অ্যান্ড কলেজ, নওগাঁ-এর ২০ বছর পূর্তি ও সুবর্ণ জয়ন্তী উৎসবে আপনাকে আমন্ত্রণ।\n\n#BLSC20Years #BIAMNaogaon #14thNovember #DistrictStadium #Naogaon`;
+        navigator.clipboard.writeText(caption).then(() => {
+            alert('ক্যাপশন কপি করা হয়েছে!');
+        });
+    }
+
+    init();
+</script>
+</body>
+</html>
