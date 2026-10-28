@@ -139,7 +139,7 @@
         .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(249, 115, 22, 0.6); }
         .btn-secondary { background: rgba(255, 255, 255, 0.15); color: #ffffff; border: 1px solid rgba(255, 255, 255, 0.2); }
         .btn-secondary:hover { background: rgba(255, 255, 255, 0.25); }
-        .aspect-options, .theme-options { display: flex; gap: 10px; margin-bottom: 10px; }
+        .aspect-options { display: flex; gap: 10px; margin-bottom: 10px; }
         .radio-btn {
             flex: 1;
             padding: 8px;
@@ -178,7 +178,7 @@
             </div>
 
             <div class="control-group">
-                <h3>২. সাইজ ও থিম নির্বাচন</h3>
+                <h3>২. সাইজ নির্বাচন করুন</h3>
                 <label>পোস্টার সাইজ:</label>
                 <div class="aspect-options">
                     <div class="radio-btn active" onclick="setAspectRatio('1:1', this)">Facebook Post (1:1)</div>
@@ -377,8 +377,7 @@
             ctx.fillText('এখানে আপনার ছবি আপলোড করুন', W / 2, H / 2);
         }
 
-        // 2. Draw Poster Overlay / Frame Design
-        // Bottom Gradient Overlay for text readability
+        // 2. Overlay & Gradient
         const gradHeight = H * 0.42;
         const grad = ctx.createLinearGradient(0, H - gradHeight, 0, H);
         grad.addColorStop(0, 'rgba(10, 25, 47, 0)');
@@ -388,7 +387,6 @@
         ctx.fillStyle = grad;
         ctx.fillRect(0, H - gradHeight, W, gradHeight);
 
-        // Top Gradient for header elements
         const topGrad = ctx.createLinearGradient(0, 0, 0, 200);
         topGrad.addColorStop(0, 'rgba(10, 25, 47, 0.85)');
         topGrad.addColorStop(1, 'rgba(10, 25, 47, 0)');
@@ -407,7 +405,7 @@
         // 3. Draw Stylized "20" Logo Watermark (Top Right)
         draw20Logo(ctx, W - 140, 120, 0.7);
 
-        // 4. Prominent Badge: "আমি আসছি!"
+        // 4. Badge: "আমি আসছি!"
         ctx.save();
         const badgeX = 60;
         const badgeY = 60;
@@ -423,12 +421,12 @@
         ctx.fillText('আমি আসছি!', badgeX + 130, badgeY + 52);
         ctx.restore();
 
-        // 5. Main Invitation Text (Bottom)
+        // 5. Main Text (Bottom)
         ctx.textAlign = 'center';
         
         // Question Tagline
         ctx.fillStyle = '#fbbf24';
-        ctx.font = 'bold 44px "Hind Siliguri", sans-serif';
+        ctx.font = 'bold 42px "Hind Siliguri", sans-serif';
         ctx.shadowColor = 'rgba(0,0,0,0.8)';
         ctx.shadowBlur = 10;
         ctx.fillText('আপনারা সবাই ১৪ই নভেম্বর জেলা স্টেডিয়াম মাঠে আসছেন তো?', W / 2, H - 170);
@@ -436,14 +434,14 @@
         // School Name
         ctx.fillStyle = '#ffffff';
         ctx.font = 'bold 36px "Hind Siliguri", sans-serif';
-        ctx.fillText('বিয়াম ল্যাবরেটরি স্কুল অ্যান্ড কলেজ, নওগাঁ', W / 2, H - 110);
+        ctx.fillText('বিয়াম ল্যাবরেটরি স্কুল অ্যান্ড কলেজ, নওগাঁ', W / 2, H - 115);
 
-        // Subtitle / Event Title
+        // Updated Text Requested by Teacher
         ctx.fillStyle = '#38bdf8';
-        ctx.font = '600 28px "Hind Siliguri", sans-serif';
-        ctx.fillText('২০ বছর পূর্তি ও সুবর্ণ জয়ন্তী উৎসব', W / 2, H - 65);
+        ctx.font = '600 26px "Hind Siliguri", sans-serif';
+        ctx.fillText('২০ বছর পূর্তি উৎসব মেগা কনসার্ট, বর্ণাঢ্য র‍্যালি', W / 2, H - 65);
 
-        // Optional User Name & Role
+        // User Name & Role
         const uName = document.getElementById('userName').value.trim();
         const uRole = document.getElementById('userRole').value.trim();
         if (uName || uRole) {
@@ -464,19 +462,16 @@
         }
     }
 
-    // Helper for Stylized "20" Doodle Logo
     function draw20Logo(ctx, x, y, scale) {
         ctx.save();
         ctx.translate(x, y);
         ctx.scale(scale, scale);
 
-        // Circle Base
         ctx.beginPath();
         ctx.arc(30, 40, 70, 0, Math.PI * 2);
         ctx.fillStyle = '#fbbf24';
         ctx.fill();
 
-        // Stylized Sun Rays top
         ctx.fillStyle = '#ea580c';
         for(let i = -3; i <= 3; i++) {
             ctx.beginPath();
@@ -487,7 +482,6 @@
             ctx.fill();
         }
 
-        // Ribbon "2"
         ctx.beginPath();
         ctx.lineWidth = 32;
         ctx.strokeStyle = '#0284c7';
@@ -497,7 +491,6 @@
         ctx.lineTo(40, 40);
         ctx.stroke();
 
-        // Ribbon "0"
         ctx.beginPath();
         ctx.lineWidth = 32;
         ctx.strokeStyle = '#f97316';
@@ -531,7 +524,7 @@
     }
 
     function copyCaption() {
-        const caption = `আমি আসছি! 🎉\nআপনারা সবাই ১৪ই নভেম্বর জেলা স্টেডিয়াম মাঠে আসছেন তো?\n\nবিয়াম ল্যাবরেটরি স্কুল অ্যান্ড কলেজ, নওগাঁ-এর ২০ বছর পূর্তি ও সুবর্ণ জয়ন্তী উৎসবে আপনাকে আমন্ত্রণ।\n\n#BLSC20Years #BIAMNaogaon #14thNovember #DistrictStadium #Naogaon`;
+        const caption = `আমি আসছি! 🎉\nআপনারা সবাই ১৪ই নভেম্বর জেলা স্টেডিয়াম মাঠে আসছেন তো?\n\nবিয়াম ল্যাবরেটরি স্কুল অ্যান্ড কলেজ, নওগাঁ-এর ২০ বছর পূর্তি উৎসব মেগা কনসার্ট ও বর্ণাঢ্য র‍্যালিতে আপনাকে আমন্ত্রণ।\n\n#BLSC20Years #BIAMNaogaon #14thNovember #DistrictStadium #Naogaon`;
         navigator.clipboard.writeText(caption).then(() => {
             alert('ক্যাপশন কপি করা হয়েছে!');
         });
