@@ -399,27 +399,24 @@
 
         draw20Logo(ctx, W - 140, 120, 0.7);
 
-        // Updated Badge Text
+        // Top Orange Badge: Venue & Time
         ctx.save();
         const badgeX = 50;
         const badgeY = 60;
         ctx.fillStyle = '#f97316';
         ctx.shadowColor = 'rgba(0,0,0,0.5)';
         ctx.shadowBlur = 15;
-        roundRect(ctx, badgeX, badgeY, 480, 75, 15, true, false);
+        roundRect(ctx, badgeX, badgeY, 520, 110, 15, true, false);
         
         ctx.fillStyle = '#ffffff';
-        ctx.font = 'bold 32px "Hind Siliguri", sans-serif';
+        ctx.font = 'bold 28px "Hind Siliguri", sans-serif';
         ctx.textAlign = 'center';
         ctx.shadowBlur = 0;
-        ctx.fillText(ভেন্যু: জেলা স্টেডিয়াম, নওগাঁ, badgeX + 240, badgeY + 48);
-        ctx.restore();
-
-        ctx.fillStyle = '#ffffff';
-        ctx.font = 'bold 32px "Hind Siliguri", sans-serif';
-        ctx.textAlign = 'center';
-        ctx.shadowBlur = 0;
-        ctx.fillText(সময়:১৪ নভেম্বর ২০২৬, badgeX + 240, badgeY + 48);
+        ctx.fillText('ভেন্যু: জেলা স্টেডিয়াম, নওগাঁ', badgeX + 260, badgeY + 45);
+        
+        ctx.fillStyle = '#fbbf24';
+        ctx.font = 'bold 30px "Hind Siliguri", sans-serif';
+        ctx.fillText('সময়: ১৪ নভেম্বর ২০২৬', badgeX + 260, badgeY + 88);
         ctx.restore();
 
         // Main Bottom Text Lines
@@ -521,7 +518,7 @@
     }
 
     function copyCaption() {
-        const caption = `আমি বিএলএসসি নওগাঁর শিক্ষার্থী, আমার প্রিয় প্রতিষ্ঠানের ২ দশক উদযাপনে আমি অংশগ্রহণ করছি। 🎉\n\nতুমি অংশগ্রহণ করছো তো? তোমার অংশগ্রহণ নিশ্চিত করতে দ্রুত রেজিস্ট্রেশন করো!\n\n#BLSC20Years #BIAMNaogaon #2DecadeCelebration #Naogaon`;
+        const caption = `আমি বিএলএসসি নওগাঁর শিক্ষার্থী, আমার প্রিয় প্রতিষ্ঠানের ২ দশক উদযাপনে আমি অংশগ্রহণ করছি। 🎉\n\nভেন্যু: জেলা স্টেডিয়াম, নওগাঁ\nসময়: ১৪ নভেম্বর ২০২৬\n\nতুমি অংশগ্রহণ করছো তো? তোমার অংশগ্রহণ নিশ্চিত করতে দ্রুত রেজিস্ট্রেশন করো!\n\n#BLSC20Years #BIAMNaogaon #2DecadeCelebration #Naogaon`;
         navigator.clipboard.writeText(caption).then(() => {
             alert('ক্যাপশন কপি করা হয়েছে!');
         });
