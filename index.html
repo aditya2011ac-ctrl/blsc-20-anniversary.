@@ -305,7 +305,6 @@
         imgY = canvas.height / 2;
     }
 
-    // Dragging Logic
     canvas.addEventListener('mousedown', startDrag);
     canvas.addEventListener('touchstart', startDrag, {passive: false});
 
@@ -352,7 +351,6 @@
 
         ctx.clearRect(0, 0, W, H);
 
-        // 1. Draw User Image
         if (userImg) {
             ctx.save();
             ctx.filter = `brightness(${brightness}%)`;
@@ -368,7 +366,6 @@
             );
             ctx.restore();
         } else {
-            // Placeholder background
             ctx.fillStyle = '#0f172a';
             ctx.fillRect(0, 0, W, H);
             ctx.fillStyle = '#64748b';
@@ -377,8 +374,7 @@
             ctx.fillText('এখানে আপনার ছবি আপলোড করুন', W / 2, H / 2);
         }
 
-        // 2. Overlay & Gradient
-        const gradHeight = H * 0.42;
+        const gradHeight = H * 0.45;
         const grad = ctx.createLinearGradient(0, H - gradHeight, 0, H);
         grad.addColorStop(0, 'rgba(10, 25, 47, 0)');
         grad.addColorStop(0.3, 'rgba(10, 25, 47, 0.75)');
@@ -393,7 +389,6 @@
         ctx.fillStyle = topGrad;
         ctx.fillRect(0, 0, W, 200);
 
-        // Outer Decorative Border
         ctx.strokeStyle = '#fbbf24';
         ctx.lineWidth = 16;
         ctx.strokeRect(10, 10, W - 20, H - 20);
@@ -402,61 +397,56 @@
         ctx.lineWidth = 6;
         ctx.strokeRect(22, 22, W - 44, H - 44);
 
-        // 3. Draw Stylized "20" Logo Watermark (Top Right)
         draw20Logo(ctx, W - 140, 120, 0.7);
 
-        // 4. Badge: "আমি আসছি!"
+        // Updated Badge Text
         ctx.save();
-        const badgeX = 60;
+        const badgeX = 50;
         const badgeY = 60;
         ctx.fillStyle = '#f97316';
         ctx.shadowColor = 'rgba(0,0,0,0.5)';
         ctx.shadowBlur = 15;
-        roundRect(ctx, badgeX, badgeY, 260, 75, 15, true, false);
+        roundRect(ctx, badgeX, badgeY, 480, 75, 15, true, false);
         
         ctx.fillStyle = '#ffffff';
-        ctx.font = 'bold 42px "Hind Siliguri", sans-serif';
+        ctx.font = 'bold 32px "Hind Siliguri", sans-serif';
         ctx.textAlign = 'center';
         ctx.shadowBlur = 0;
-        ctx.fillText('আমি আসছি!', badgeX + 130, badgeY + 52);
+        ctx.fillText('আমি অংশগ্রহণ করছি, আপনি করছেন তো?', badgeX + 240, badgeY + 48);
         ctx.restore();
 
-        // 5. Main Text (Bottom)
+        // Main Bottom Text Lines
         ctx.textAlign = 'center';
         
-        // Question Tagline
         ctx.fillStyle = '#fbbf24';
-        ctx.font = 'bold 42px "Hind Siliguri", sans-serif';
+        ctx.font = 'bold 34px "Hind Siliguri", sans-serif';
         ctx.shadowColor = 'rgba(0,0,0,0.8)';
         ctx.shadowBlur = 10;
-        ctx.fillText('আপনারা সবাই ১৪ই নভেম্বর জেলা স্টেডিয়াম মাঠে আসছেন তো?', W / 2, H - 170);
+        ctx.fillText('আমি বিএলএসসি নওগাঁর শিক্ষার্থী, আমার প্রিয় প্রতিষ্ঠানের', W / 2, H - 195);
 
-        // School Name
         ctx.fillStyle = '#ffffff';
         ctx.font = 'bold 36px "Hind Siliguri", sans-serif';
-        ctx.fillText('বিয়াম ল্যাবরেটরি স্কুল অ্যান্ড কলেজ, নওগাঁ', W / 2, H - 115);
+        ctx.fillText('২ দশক উদযাপনে আমি অংশগ্রহণ করছি।', W / 2, H - 145);
 
-        // Updated Text Requested by Teacher
         ctx.fillStyle = '#38bdf8';
-        ctx.font = '600 26px "Hind Siliguri", sans-serif';
-        ctx.fillText('২০ বছর পূর্তি উৎসব মেগা কনসার্ট, বর্ণাঢ্য র‍্যালি', W / 2, H - 65);
+        ctx.font = '600 28px "Hind Siliguri", sans-serif';
+        ctx.fillText('তুমি অংশগ্রহণ করছো তো? দ্রুত রেজিস্ট্রেশন করো!', W / 2, H - 95);
 
-        // User Name & Role
         const uName = document.getElementById('userName').value.trim();
         const uRole = document.getElementById('userRole').value.trim();
         if (uName || uRole) {
             ctx.save();
             ctx.fillStyle = 'rgba(2, 132, 199, 0.9)';
-            roundRect(ctx, W / 2 - 250, H - 280, 500, uRole ? 70 : 50, 10, true, false);
+            roundRect(ctx, W / 2 - 250, H - 300, 500, uRole ? 70 : 50, 10, true, false);
             
             ctx.fillStyle = '#ffffff';
             ctx.font = 'bold 28px "Hind Siliguri", sans-serif';
-            ctx.fillText(uName, W / 2, H - (uRole ? 245 : 245));
+            ctx.fillText(uName, W / 2, H - (uRole ? 265 : 265));
             
             if (uRole) {
                 ctx.fillStyle = '#fbbf24';
                 ctx.font = '20px "Hind Siliguri", sans-serif';
-                ctx.fillText(uRole, W / 2, H - 222);
+                ctx.fillText(uRole, W / 2, H - 242);
             }
             ctx.restore();
         }
@@ -524,7 +514,7 @@
     }
 
     function copyCaption() {
-        const caption = `আমি আসছি! 🎉\nআপনারা সবাই ১৪ই নভেম্বর জেলা স্টেডিয়াম মাঠে আসছেন তো?\n\nবিয়াম ল্যাবরেটরি স্কুল অ্যান্ড কলেজ, নওগাঁ-এর ২০ বছর পূর্তি উৎসব মেগা কনসার্ট ও বর্ণাঢ্য র‍্যালিতে আপনাকে আমন্ত্রণ।\n\n#BLSC20Years #BIAMNaogaon #14thNovember #DistrictStadium #Naogaon`;
+        const caption = `আমি বিএলএসসি নওগাঁর শিক্ষার্থী, আমার প্রিয় প্রতিষ্ঠানের ২ দশক উদযাপনে আমি অংশগ্রহণ করছি। 🎉\n\nতুমি অংশগ্রহণ করছো তো? তোমার অংশগ্রহণ নিশ্চিত করতে দ্রুত রেজিস্ট্রেশন করো!\n\n#BLSC20Years #BIAMNaogaon #2DecadeCelebration #Naogaon`;
         navigator.clipboard.writeText(caption).then(() => {
             alert('ক্যাপশন কপি করা হয়েছে!');
         });
